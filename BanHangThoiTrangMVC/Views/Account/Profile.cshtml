@@ -1,0 +1,75 @@
+﻿@model BanHangThoiTrangMVC.Models.ApplicationUser
+@{
+    ViewBag.Title = "Cập Nhật Tài Khoản";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/main_styles.css">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>@ViewBag.Title</h1>
+            </div>
+           
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Thông Tin Tài Khoản</h3>
+        </div>
+        <div class="card-body">
+            <div class="bs-stepper-content">
+                @using (Html.BeginForm("Profile", "Account", FormMethod.Post, new { }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    @Html.HiddenFor(x => x.Id)
+                <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
+
+                    <div class="form-group">
+                        <label for="exampleInput">Tên Tài Khoản</label>
+                        @Html.TextBoxFor(x => x.UserName, new { @class = "form-control", @placeholder = "Tên Tài Khoản", @readonly = "readonly" })
+                        @Html.ValidationMessageFor(x => x.UserName, null, new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInput">Họ Và Tên</label>
+                        @Html.TextBoxFor(x => x.Fullname, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Fullname, null, new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInput">Số Điện Thoại</label>
+                        @Html.TextBoxFor(x => x.Phone, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Phone, null, new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInput">Email</label>
+                        @Html.TextAreaFor(x => x.Email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Email, null, new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <a href="/home" class="btn btn-danger">Quay Lại</a>
+                        <button type="submit" class="btn btn-primary">Cập nhật</button>
+                    </div>
+                </div>
+
+                }
+            </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+
+        </div>
+        <!-- /.card-footer-->
+    </div>
+    <!-- /.card -->
+
+</section>
+<!-- /.content -->

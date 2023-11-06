@@ -1,5 +1,7 @@
 ﻿using BanHangThoiTrangMVC.Models;
 using BanHangThoiTrangMVC.Models.EF;
+using Microsoft.AspNet.Identity;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,5 +74,36 @@ namespace BanHangThoiTrangMVC.Controllers
             }
             return View(item);
         }
+
+        public ActionResult Order(int? page)
+        {
+            string currentUserId = User.Identity.GetUserId();
+            var items = db.Orders
+                .Where(x => x.UserId == currentUserId)
+                .OrderByDescending(x => x.CreateDate)
+                .ToList();
+
+            if (page == null)
+            {
+                page = 1;
+            }
+            var pageNumber = page ?? 1;
+            var pageSize = 10;
+            ViewBag.PageSize = pageSize;
+            ViewBag.Page = pageNumber;
+            return View(items.ToPagedList(pageNumber, pageSize));
+        }
+        public ActionResult ViewOrder(int id)
+        {
+            var item = db.Orders.Find(id);
+            return View(item);
+        }
+
+        public ActionResult Partial_SanPham(int id)
+        {
+            var items = db.OrderDetails.Where(x => x.OrderId == id).ToList();
+            return PartialView(items);
+        }
+
     }
 }

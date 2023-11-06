@@ -94,7 +94,8 @@
                                                 <i class="fa fa-angle-down"></i>
                                             </a>
                                             <ul class="account_selection">
-                                                <li><a href="#"><i class="fa fa-sign-in" aria-hidden="true"></i>Profile</a></li>
+                                                <li><a href="/account/profile"><i class="fa fa-sign-in" aria-hidden="true"></i>Profile</a></li>
+                                                <li><a href="/products/order"><i class="fa fa-history" aria-hidden="true"></i>Order History</a></li>
                                                 <li><a href="javascript:document.getElementById('logOffForm').submit()"><i class="fa fa-user-plus" aria-hidden="true"></i>Log Out</a></li>
                                             </ul>
                                         }
@@ -126,7 +127,7 @@
                                 @Html.Action("MenuTop", "Menu")
                                 <ul class="navbar_user">
                                     <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+                                    <li><a href="/account/profile"><i class="fa fa-user" aria-hidden="true"></i></a></li>
                                     <li class="checkout">
                                         <a href="/gio-hang">
                                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>

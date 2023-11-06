@@ -1,0 +1,105 @@
+﻿@model PagedList.IPagedList<BanHangThoiTrangMVC.Models.EF.Order>
+@using PagedList
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Danh Sách Đơn Hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/main_styles.css">
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>@ViewBag.Title</h1>
+            </div>
+
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Danh Sách Đơn Hàng</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã Đơn Hàng</th>
+                        <th>Tên Khách Hàng</th>
+                        <th>SDT</th>
+                        <th>Email</th>
+                        <th>Thành Tiền</th>
+                        <th>Ngày Tạo</th>
+                        <th>Trạng Thái</th>
+                        <th>Phương Thức</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        var i = ((ViewBag.Page - 1) * ViewBag.PageSize) + 1;
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@i</td>
+                                <td>@item.Code</td>
+                                <td>@item.CustomerName</td>
+                                <td>@item.Phone</td>
+                                <td>@item.Email</td>
+                                <td>@BanHangThoiTrangMVC.Common.Common.FormatNumber(item.TotalAmount, 0)</td>
+                                <td>@item.CreateDate.ToString("dd/MM/yyyy")</td>
+                                <td>
+                                    @if (item.Status == 1)
+                                    {
+                                        <span>Chưa Thanh Toán</span>
+                                    }
+                                    @if (item.Status == 2)
+                                    {
+                                        <span>Đã Thanh Toán</span>
+                                    }
+                                    @if (item.Status == 3)
+                                    {
+                                        <span>Hoàn Thành</span>
+                                    }
+                                    @if (item.Status == 4)
+                                    {
+                                        <span>Hủy</span>
+                                    }
+                                </td>
+                                <td>@(item.TypePayment==1?"COD":"Chuyển Khoản")</td>
+                                <td>
+                                    <a href="/products/vieworder/@item.Id" class="btn btn-sm btn-success">Xem</a>
+                                </td>
+                            </tr>
+                            i++;
+
+                        }
+                    }
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="col-6"></div>
+                <div class="col-6" style="text-align:right;">
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+                </div>
+            </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+
+        </div>
+        <!-- /.card-footer-->
+    </div>
+    <!-- /.card -->
+
+</section>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace BanHangThoiTrangMVC.Models
 {
@@ -15,6 +16,7 @@ namespace BanHangThoiTrangMVC.Models
         [Required(ErrorMessage = "Địa chỉ khổng để trống")]
         public string Address { get; set; }
         public string Email { get; set; }
+        public string UserId { get; set; }
         public int TypePayment { get; set; }
         public int TypePaymentVN { get; set; }
     }

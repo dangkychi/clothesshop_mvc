@@ -1,7 +1,9 @@
 ﻿@model IEnumerable<BanHangThoiTrangMVC.Models.EF.Product>
 @{
     ViewBag.Title = "Danh Sách Sản Phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/main_styles.css">
 <link rel="stylesheet" type="text/css" href="~/Content/assets/styles/categories_styles.css">
 <link rel="stylesheet" type="text/css" href="~/Content/assets/styles/categories_responsive.css">
 
@@ -27,7 +29,7 @@
                     <div class="sidebar_title">
                         <h5>Product Category</h5>
                     </div>
-                    @Html.Action("MenuLeft", "Menu"@*, new { id = ViewBag.CateId }*@)
+                    @Html.Action("MenuLeft", "Menu", new { id = ViewBag.CateId })
                 </div>
 
                 <!-- Price Range Filtering -->

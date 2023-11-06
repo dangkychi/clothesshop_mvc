@@ -1,6 +1,7 @@
 ﻿using BanHangThoiTrangMVC.Models;
 using BanHangThoiTrangMVC.Models.EF;
 using BanHangThoiTrangMVC.Models.Payments;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -16,7 +17,7 @@ namespace BanHangThoiTrangMVC.Controllers
         // GET: ShoppingCart
         public ActionResult Index()
         {
-            
+
             ShoppingCart cart = (ShoppingCart)Session["Cart"];
             if (cart != null && cart.Items.Any())
             {
@@ -48,13 +49,13 @@ namespace BanHangThoiTrangMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-
         public ActionResult CheckOut(OrderViewModel req)
         {
             var code = new { Success = false, Code = -1, Url = "" };
             if (ModelState.IsValid)
             {
                 ShoppingCart cart = (ShoppingCart)Session["Cart"];
+                var currentUserId = User.Identity.GetUserId();
                 if (cart != null)
                 {
                     Order order = new Order();
@@ -62,6 +63,7 @@ namespace BanHangThoiTrangMVC.Controllers
                     order.Phone = req.Phone;
                     order.Address = req.Address;
                     order.Email = req.Email;
+                    order.UserId = currentUserId;
                     order.Status = 1;//chưa thanh toán / 2/đã thanh toán, 3/Hoàn thành, 4/hủy
                     cart.Items.ForEach(x => order.OrderDetails.Add(new OrderDetail
                     {
@@ -131,8 +133,7 @@ namespace BanHangThoiTrangMVC.Controllers
             }
             return Json(code);
         }
-
-
+        
         public ActionResult ShowCount() //hien thi co bao nhieu san pham trong gio hang
         {
             ShoppingCart cart = (ShoppingCart)Session["Cart"];
@@ -145,40 +146,43 @@ namespace BanHangThoiTrangMVC.Controllers
 
 
         [HttpPost]
-        [Authorize]
+        /*[Authorize]*/
         public ActionResult AddToCart(int id, int quantity)
         {
-            
-            var code = new { Success = false, msg = "", code = -1, Count = 0 };
-            var db = new ApplicationDbContext();
-            var checkProduct = db.Products.FirstOrDefault(x => x.Id == id);
-            ShoppingCart cart = (ShoppingCart)Session["Cart"];
-            if (cart == null)
+            if (User.Identity.IsAuthenticated)
             {
-                cart = new ShoppingCart();
+                var code = new { Success = false, msg = "", code = -1, Count = 0 };
+                var db = new ApplicationDbContext();
+                var checkProduct = db.Products.FirstOrDefault(x => x.Id == id);
+                ShoppingCart cart = (ShoppingCart)Session["Cart"];
+                if (cart == null)
+                {
+                    cart = new ShoppingCart();
+                }
+                ShoppingCartItem item = new ShoppingCartItem
+                {
+                    ProductId = checkProduct.Id,
+                    ProductName = checkProduct.Title,
+                    CategoryName = checkProduct.ProductCategory.Title,
+                    Alias = checkProduct.Alias,
+                    Quantity = quantity
+                };
+                if (checkProduct.ProductImages.FirstOrDefault(x => x.IsDefault) != null)
+                {
+                    item.ProductImg = checkProduct.ProductImages.FirstOrDefault(x => x.IsDefault).Image;
+                }
+                item.Price = checkProduct.Price;
+                if (checkProduct.PriceSale > 0)
+                {
+                    item.Price = (decimal)checkProduct.PriceSale;
+                }
+                item.TotalPrice = item.Quantity * item.Price;
+                cart.AddToCart(item, quantity);
+                Session["Cart"] = cart;
+                code = new { Success = true, msg = "Thêm Sản Phẩm Vào Giỏ Hàng Thành Công!", code = 1, Count = cart.Items.Count };
+                return Json(code);
             }
-            ShoppingCartItem item = new ShoppingCartItem
-            {
-                ProductId = checkProduct.Id,
-                ProductName = checkProduct.Title,
-                CategoryName = checkProduct.ProductCategory.Title,
-                Alias = checkProduct.Alias,
-                Quantity = quantity
-            };
-            if (checkProduct.ProductImages.FirstOrDefault(x => x.IsDefault) != null)
-            {
-                item.ProductImg = checkProduct.ProductImages.FirstOrDefault(x => x.IsDefault).Image;
-            }
-            item.Price = checkProduct.Price;
-            if (checkProduct.PriceSale > 0)
-            {
-                item.Price = (decimal)checkProduct.PriceSale;
-            }
-            item.TotalPrice = item.Quantity * item.Price;
-            cart.AddToCart(item, quantity);
-            Session["Cart"] = cart;
-            code = new { Success = true, msg = "Thêm Sản Phẩm Vào Giỏ Hàng Thành Công!", code = 1, Count = cart.Items.Count };
-            return Json(code);
+            return Json(new { Success = true, msg = "Cần Đăng Nhập Mới Được Mua Hàng" });
         }
 
         [HttpPost]

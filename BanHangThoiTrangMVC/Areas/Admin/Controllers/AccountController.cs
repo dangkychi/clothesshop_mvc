@@ -218,7 +218,7 @@ namespace BanHangThoiTrangMVC.Areas.Admin.Controllers
                   .Select(r => new SelectListItem { Value = r.Id.ToString(), Text = r.Name })
                   .ToList();
             SelectList selectList = new SelectList(roles, "Value", "Text");*/
-            var selecList = new SelectList(db.Roles.ToList(), "Name", "Name");
+            var selecList = new SelectList(db.Roles, "Name", "Name", item.Id);
             ViewBag.Role = selecList;
             return View(item);
         }
@@ -230,19 +230,21 @@ namespace BanHangThoiTrangMVC.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Users.Attach(model);
+                var oldItem = db.Users.Find(model.Id);
+                oldItem.UserName = model.UserName;
+                oldItem.Fullname = model.Fullname;
+                oldItem.Phone = model.Phone;
+                oldItem.Email = model.Email;
+                oldItem.RoleNames = model.RoleNames;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+                /*db.Users.Attach(model);
                 db.Entry(model).State = System.Data.Entity.EntityState.Modified;
-                db.Entry(model).Property(x => x.Roles).IsModified = true;
-                var result = await UserManager.UpdateAsync(model);
-                if (result.Succeeded)
-                {
-                    UserManager.Update(model); // Lưu ý dòng này khi đăng ký thành công để nó add vào table UserRole
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
-                /*AddErrors(result);*/
+                model.LockoutEnabled = true;
+                db.SaveChanges();
+                return RedirectToAction("Index");*/
+
             }
-            ViewBag.Role = new SelectList(db.Roles.ToList(), "Name", "Name");
             return View(model);
 
 

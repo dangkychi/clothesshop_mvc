@@ -18,7 +18,10 @@
                 if (rs.Success) {
                     $('#checkout_items').html(rs.Count);
                     alert(rs.msg);
-                }
+                }/*
+                else {
+                    alert(rs.msg);
+                }*/
             }
         });
     });

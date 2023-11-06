@@ -74,7 +74,7 @@
                                         <span>Hủy</span>
                                     }
                                 </td>
-                                <td>@(item.Status==1?"COD":"Chuyển Khoản")</td>
+                                <td>@(item.TypePayment==1?"COD":"Chuyển Khoản")</td>
                                 <td>
                                     <a href="/admin/order/vieworder/@item.Id" class="btn btn-sm btn-success">Xem</a>
                                     <a href="#" class="btn btn-sm btn-danger btnCapNhat" data-id="@item.Id">Cập Nhật</a>
