@@ -1,4 +1,6 @@
 ﻿using BanHangThoiTrangMVC.Models;
+using BanHangThoiTrangMVC.Models.EF;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +13,24 @@ namespace BanHangThoiTrangMVC.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         // GET: Article
-        public ActionResult Index(string alias)
+        public ActionResult Index(int? page)
         {
-            var item = db.Posts.FirstOrDefault(x => x.Alias == alias);
+            var pageSize = 5;
+            if (page == null)
+            {
+                page = 1;
+            }
+            IEnumerable<Posts> items = db.Posts.OrderByDescending(x => x.CreateDate);
+            var pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            items = items.ToPagedList(pageIndex, pageSize);
+            ViewBag.PageSize = pageSize;
+            ViewBag.Page = page;
+            return View(items);
+        }
+
+        public ActionResult Detail(int id)
+        {
+            var item = db.Posts.Find(id);
             return View(item);
         }
     }

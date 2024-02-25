@@ -23,6 +23,7 @@
     <link rel="stylesheet" type="text/css" href="~/Content/assets/plugins/OwlCarousel2-2.2.1/animate.css">
     <link rel="stylesheet" type="text/css" href="~/Content/assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="~/Content/assets/styles/responsive.css">
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>
     @Scripts.Render("~/bundles/modernizr")
@@ -42,7 +43,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="top_nav_left">Hotline: @SettingHelper.GetValue("SettingHotline")   ||   Email: @SettingHelper.GetValue("SettingEmail")</div>
-                            
+
                         </div>
                         <div class="col-md-6 text-right">
                             <div class="top_nav_right">
@@ -95,6 +96,7 @@
                                             </a>
                                             <ul class="account_selection">
                                                 <li><a href="/account/profile"><i class="fa fa-sign-in" aria-hidden="true"></i>Profile</a></li>
+                                                <li><a href="/products/wishlist"><i class="fa fa-list" aria-hidden="true"></i>Wish List</a></li>
                                                 <li><a href="/products/order"><i class="fa fa-history" aria-hidden="true"></i>Order History</a></li>
                                                 <li><a href="javascript:document.getElementById('logOffForm').submit()"><i class="fa fa-user-plus" aria-hidden="true"></i>Log Out</a></li>
                                             </ul>

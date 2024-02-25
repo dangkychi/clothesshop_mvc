@@ -39,6 +39,9 @@ namespace BanHangThoiTrangMVC.Models
         public DbSet<SystemSetting> SystemSettings { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ParentComment> ParentComments { get; set; }
+        public DbSet<ChildComment> ChildComments { get; set; }
+        public DbSet<LikeProduct> LikeProducts { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Order> Orders { get; set; }

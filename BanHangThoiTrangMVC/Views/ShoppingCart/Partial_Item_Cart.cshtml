@@ -31,7 +31,7 @@
                 </td>
                 <td>@item.CategoryName</td>
                 <td>@Common.FormatNumber(item.Price, 0)</td>
-                <td><input type="number" class="form-control" id="Quantity_@item.ProductId" value="@item.Quantity" /></td>
+                <td><input type="number" class="form-control" id="Quantity_@item.ProductId" value="@item.Quantity" min="0" /></td>
                 <th>@Common.FormatNumber(item.TotalPrice, 2)</th>
                 <td>
                     <a href="#" data-id="@item.ProductId" class="btn btn-sm btn-danger btnDelete">Xóa</a>
@@ -54,4 +54,20 @@
         </tr>
     }
 </table>
+
+
+<script>
+    $(document).ready(function () {
+        $(".btnUpdate").click(function () {
+            var productId = $(this).data("id");
+            var quantity = $("#Quantity_" + productId).val();
+
+            if (parseInt(quantity) < 0) {
+                alert("Số lượng không được âm!");
+                return false;
+            }            
+        });
+    });
+</script>
+
 

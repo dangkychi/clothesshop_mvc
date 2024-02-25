@@ -155,7 +155,11 @@
                                                     <div class="product_image">
                                                         <img src="@strImge" alt="@item.Title">
                                                     </div>
-                                                    <div class="favorite favorite_left"></div>
+                                                    @using (Html.BeginForm("WishList", "Products", FormMethod.Post, new { }))
+                                                    {
+                                                        @Html.AntiForgeryToken()
+                                                        <button type="submit" name="ProductId" value="@item.Id"><div class="favorite favorite_left"></div></button>
+                                                    }
                                                     @if (item.PriceSale > 0)
                                                     {
                                                         <div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>sale</span></div>

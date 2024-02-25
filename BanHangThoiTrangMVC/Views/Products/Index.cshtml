@@ -20,7 +20,7 @@
             </div>
             @using (Html.BeginForm("Index", "Products", FormMethod.Get, new { }))
             {
-                <div class="input-group input-group-sm">
+                <div class="input-group input-group-sm">    
                     @Html.TextBox("Searchtext", null, new { @class = "form-control" })
                     <span class="input-group-append">
                         <button type="submit" class="btn btn-info btn-flat">Tìm Kiếm</button>
@@ -163,7 +163,11 @@
                                                     <div class="product_image" hr>
                                                         <a href="/products/detail/@item.Id"><img src="@strImge" alt="@item.Title"></a>
                                                     </div>
-                                                    <div class="favorite favorite_left"></div>
+                                                    @using (Html.BeginForm("WishList", "Products", FormMethod.Post, new { }))
+                                                    {
+                                                        @Html.AntiForgeryToken()
+                                                        <button type="submit" name="ProductId" value="@item.Id"><div class="favorite favorite_left"></div></button>
+                                                    }
                                                     @if (item.PriceSale > 0)
                                                     {
                                                         <div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>sale</span></div>

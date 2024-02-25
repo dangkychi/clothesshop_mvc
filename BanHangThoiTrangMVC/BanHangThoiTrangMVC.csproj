@@ -292,6 +292,14 @@
     <Compile Include="Migrations\202311060717007_UpdateOrder.designer.cs">
       <DependentUpon>202311060717007_UpdateOrder.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202311201730232_CreateLikeProduct.cs" />
+    <Compile Include="Migrations\202311201730232_CreateLikeProduct.designer.cs">
+      <DependentUpon>202311201730232_CreateLikeProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202311210725431_CreateComment.cs" />
+    <Compile Include="Migrations\202311210725431_CreateComment.designer.cs">
+      <DependentUpon>202311210725431_CreateComment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CommonAbstract.cs" />
@@ -302,9 +310,12 @@
     <Compile Include="Models\EF\Category.cs" />
     <Compile Include="Models\EF\Contact.cs" />
     <Compile Include="Models\EF\News.cs" />
+    <Compile Include="Models\EF\ChildComment.cs" />
+    <Compile Include="Models\EF\ParentComment.cs" />
     <Compile Include="Models\EF\Order.cs" />
     <Compile Include="Models\EF\OrderDetail.cs" />
     <Compile Include="Models\EF\Posts.cs" />
+    <Compile Include="Models\EF\LikeProduct.cs" />
     <Compile Include="Models\EF\Product.cs" />
     <Compile Include="Models\EF\ProductCategory.cs" />
     <Compile Include="Models\EF\ProductImage.cs" />
@@ -3680,6 +3691,10 @@
     <Content Include="Views\Products\Partial_SanPham.cshtml" />
     <Content Include="Views\Products\ViewOrder.cshtml" />
     <Content Include="Views\Products\Order.cshtml" />
+    <Content Include="Views\Products\WishList.cshtml" />
+    <Content Include="Views\Products\Partial_Review.cshtml" />
+    <Content Include="Views\Article\Detail.cshtml" />
+    <Content Include="Views\Contact\Gioithieu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3755,6 +3770,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202311060717007_UpdateOrder.resx">
       <DependentUpon>202311060717007_UpdateOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311201730232_CreateLikeProduct.resx">
+      <DependentUpon>202311201730232_CreateLikeProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311210725431_CreateComment.resx">
+      <DependentUpon>202311210725431_CreateComment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

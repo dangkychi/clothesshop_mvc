@@ -1,4 +1,5 @@
 ﻿using BanHangThoiTrangMVC.Models;
+using BanHangThoiTrangMVC.Models.EF;
 using PagedList;
 using System;
 using System.Collections.Generic;
@@ -13,18 +14,23 @@ namespace BanHangThoiTrangMVC.Areas.Admin.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         // GET: Admin/Order
-        public ActionResult Index(int? page)
+        public ActionResult Index(string Searchtext, int? page)
         {
-            var items = db.Orders.OrderByDescending(x => x.CreateDate).ToList();
+            var pageSize = 10;
             if (page == null)
             {
                 page = 1;
             }
-            var pageNumber = page ?? 1;
-            var pageSize = 10;
+            IEnumerable<Order> items = db.Orders.OrderByDescending(x => x.Id);
+            if (!string.IsNullOrEmpty(Searchtext))
+            {
+                items = items.Where(x => x.CustomerName.Contains(Searchtext) || x.Phone.Contains(Searchtext) || x.Code.Contains(Searchtext));
+            }
+            var pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            items = items.ToPagedList(pageIndex, pageSize);
             ViewBag.PageSize = pageSize;
-            ViewBag.Page = pageNumber;
-            return View(items.ToPagedList(pageNumber, pageSize));
+            ViewBag.Page = page;
+            return View(items);
         }
 
         public ActionResult ViewOrder(int id)
@@ -39,7 +45,7 @@ namespace BanHangThoiTrangMVC.Areas.Admin.Controllers
             return PartialView(items);
         }
 
-        [HttpPost]
+        [HttpPost] 
         public ActionResult UpdateTT(int id,int trangthai)
         {
             var item = db.Orders.Find(id);

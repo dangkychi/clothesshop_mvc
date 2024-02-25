@@ -32,14 +32,18 @@
                                             <div class="product_image">
                                                 <img src="@strImge" alt="@item.Title">
                                             </div>
-                                            <div class="favorite favorite_left"></div>
+                                            @using (Html.BeginForm("WishList", "Products", FormMethod.Post, new { }))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                <button type="submit" name="ProductId" value="@item.Id"><div class="favorite favorite_left"></div></button>
+                                            }
                                             @if (item.PriceSale > 0)
                                             {
                                                 <div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>sale</span></div>
                                             }
                                             @* <div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-$20</span></div>*@
                                             <div class="product_info">
-                                                <h6 class="product_name"><a href="/chi-tiet/@item.Alias-p@(item.Id)">@item.Title</a></h6>
+                                                <h6 class="product_name"><a href="@Url.Action("Detail", "Products", new { id = item.Id })">@item.Title</a></h6>
                                                 @if (item.PriceSale > 0)
                                                 {
                                                     <div class="product_price">@BanHangThoiTrangMVC.Common.Common.FormatNumber(item.PriceSale, 0)<span>@BanHangThoiTrangMVC.Common.Common.FormatNumber(item.Price, 0)</span></div>

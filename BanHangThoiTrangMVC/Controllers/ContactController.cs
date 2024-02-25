@@ -13,5 +13,9 @@ namespace BanHangThoiTrangMVC.Controllers
         {
             return View();
         }
+        public ActionResult Gioithieu()
+        {
+            return View();
+        }
     }
 }

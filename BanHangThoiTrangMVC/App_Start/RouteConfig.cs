@@ -19,6 +19,12 @@ namespace BanHangThoiTrangMVC
                 defaults: new { controller = "Contact", action = "Index", alias = UrlParameter.Optional },
                 namespaces: new[] { "BanHangThoiTrangMVC.Controllers" }
             );
+            routes.MapRoute(
+                name: "GioiThieu",
+                url: "gioi-thieu",
+                defaults: new { controller = "Contact", action = "Gioithieu", alias = UrlParameter.Optional },
+                namespaces: new[] { "BanHangThoiTrangMVC.Controllers" }
+            );
 
             routes.MapRoute(
                 name: "Giỏ Hàng",
@@ -47,10 +53,24 @@ namespace BanHangThoiTrangMVC
                 namespaces: new[] { "BanHangThoiTrangMVC.Controllers" }
             );
 
+            /*routes.MapRoute(
+                name: "Article",
+                url: "bai-viet",
+                defaults: new { controller = "Article", action = "Index", alias = UrlParameter.Optional },
+                namespaces: new[] { "BanHangThoiTrangMVC.Controllers" }
+            );*/
+
             routes.MapRoute(
                 name: "BaiViet",
                 url: "bai-viet/{alias}",
                 defaults: new { controller = "Article", action = "Index", id = UrlParameter.Optional },
+                namespaces: new[] { "BanHangThoiTrangMVC.Controllers" }
+            );
+
+            routes.MapRoute(
+                name: "ChiTietBaiViet",
+                url: "chi-tiet-bai-viet/{alias}-n{id}",
+                defaults: new { controller = "Article", action = "Detail", id = UrlParameter.Optional },
                 namespaces: new[] { "BanHangThoiTrangMVC.Controllers" }
             );
 
@@ -75,12 +95,12 @@ namespace BanHangThoiTrangMVC
                 namespaces: new[] { "BanHangThoiTrangMVC.Controllers" }
             );
 
-            routes.MapRoute(
+            /*routes.MapRoute(
                 name: "DetailProduct",
                 url: "chi-tiet/{alias}-p{id}",
                 defaults: new { controller = "Products", action = "Detail", alias = UrlParameter.Optional },
                 namespaces: new[] { "BanHangThoiTrangMVC.Controllers" }
-            );
+            );*/
 
             routes.MapRoute(
                 name: "Default",
